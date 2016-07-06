@@ -86,7 +86,7 @@ class 'Katarina'
 function Katarina:__init()
 	self:LoadPriorityTable()
 	self:SetTablePriorities()
-	self.Version = 1.4
+	self.Version = 1.5
 	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
 	self:CheckUpdate()
 	self.LastSpell = 0
@@ -317,7 +317,7 @@ end
 			AP = {
 				'Annie', 'Ahri', 'Akali', 'Anivia', 'Annie', 'Azir', 'Brand', 'Cassiopeia', 'Diana', 'Evelynn', 'FiddleSticks', 'Fizz', 'Gragas', 'Heimerdinger', 'Karthus',
 				'Kassadin', 'Katarina', 'Kayle', 'Kennen', 'Leblanc', 'Lissandra', 'Lux', 'Malzahar', 'Mordekaiser', 'Morgana', 'Nidalee', 'Orianna',
-				'Ryze', 'Sion', 'Swain', 'Syndra', 'Teemo', 'TwistedFate', 'Veigar', 'Viktor', 'Vladimir', 'Xerath', 'Ziggs', 'Zyra', Taliyah,
+				'Ryze', 'Sion', 'Swain', 'Syndra', 'Teemo', 'TwistedFate', 'Veigar', 'Viktor', 'Vladimir', 'Xerath', 'Ziggs', 'Zyra', 'Taliyah',
 				'Ekko', 'Nidalee', 'Heimerdinger', 'Aurelio Sol'
 			},
 			Support = {
