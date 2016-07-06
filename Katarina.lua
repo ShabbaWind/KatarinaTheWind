@@ -2,9 +2,7 @@ if myHero.charName ~= "Katarina" then return end
 
 function OnLoad() Katarina() end
 
--- Script Status --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))() ScriptStatus("PCFGFBIBFFG") 
--- Script Status --
 
 class 'Katarina'
 local AlreadyUlt = false
@@ -46,39 +44,25 @@ function Katarina:Menu()
   	Menu:addSubMenu("Gombok", "Keys")
   	if VIP_USER then Menu:addSubMenu("Automata skill elosztas", "AutoLeveler") end
 
-  	--Combo Menu--
 	Menu.Combo:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
 	Menu.Combo:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
 	Menu.Combo:addParam("UseE", "E hasznalata", SCRIPT_PARAM_ONOFF, true) 
 	Menu.Combo:addParam("UseR", "R hasznalata", SCRIPT_PARAM_ONOFF, true)
-  	--Combo Menu--
 
-
-  	--Harass Menu--
 	Menu.Harass:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
 	Menu.Harass:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-  	--Harass Menu--
 
-
-  	--LastHit Menu--
 	Menu.LastHit:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
 	Menu.LastHit:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-	--LastHit Menu--
 
-
-  	--LaneClear Menu--
 	Menu.LaneClear:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
 	Menu.LaneClear:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-  	--LaneClear Menu--
 
-  	--KillSteal Menu--
   	if Ignite then
   	Menu.KillSteal:addParam("Use", "Gyilkossag lopas", SCRIPT_PARAM_ONOFF, true) 
   	Menu.KillSteal:addParam("Ignite", "Ignite", SCRIPT_PARAM_ONOFF, true) 
   	end
-  	--KillSteal Menu--
 
-  	--Draws Menu--
   	Menu.Draws:addSubMenu("Szinek", "Colors")
 	Menu.Draws.Colors:addParam("Q", "Q Szin", SCRIPT_PARAM_COLOR, {255, 214, 114, 0})
 	Menu.Draws.Colors:addParam("W", "W Szin", SCRIPT_PARAM_COLOR, {255, 224, 124, 0})
@@ -89,20 +73,15 @@ function Katarina:Menu()
   	Menu.Draws:addParam("W", "W range mutatas", SCRIPT_PARAM_ONOFF, true) 
   	Menu.Draws:addParam("E", "E range mutatas", SCRIPT_PARAM_ONOFF, true) 
   	Menu.Draws:addParam("R", "R range mutatas", SCRIPT_PARAM_ONOFF, true) 
-  	--Draws Menu--
 
   	if VIP_USER then
-  	--Auto Leveler Menu--
   	Menu.AutoLeveler:addParam("Active", "Auto skill elosztas hasznalata", SCRIPT_PARAM_ONOFF, true) 
-  	--Auto Leveler Menu--
 	end
 	
- 	-- Keys Menu --
 	Menu.Keys:addParam("Combo", "Kombo gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
 	Menu.Keys:addParam("Harass", "Tamadas gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
 	Menu.Keys:addParam("LastHit", "Last Hit gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("X"))
 	Menu.Keys:addParam("LaneClear", "Lane tisztitas gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
-	-- Keys Menu --
 
 ts = TargetSelector(TARGET_LESS_CAST_PRIORITY, 775, DAMAGE_MAGICAL)
 ts.name = "Katarina"
@@ -273,7 +252,7 @@ function Katarina:Draws()
 	if Menu.Draws.R and self:Ready(_R) then DrawCircle(myHero.x, myHero.y, myHero.z, self:SpellManager(_R, range), ARGB(Menu.Draws.Colors.R[1],Menu.Draws.Colors.R[2],Menu.Draws.Colors.R[3],Menu.Draws.Colors.R[4])) end
 end
 
-function GetHPBarPos(enemy) -- BY XIVIA.
+function GetHPBarPos(enemy)
 	enemy.barData = {PercentageOffset = {x = -0.05, y = 0}}
 	local barPos = GetUnitHPBarPos(enemy)
 	local barPosOffset = GetUnitHPBarOffset(enemy)
@@ -292,7 +271,7 @@ function GetHPBarPos(enemy) -- BY XIVIA.
 	return Vector(StartPos.x, StartPos.y, 0), Vector(EndPos.x, EndPos.y, 0)
 end
 
-function Katarina:DrawCooldown() -- BY XIVIA.
+function Katarina:DrawCooldown()
 	for i = 1, heroManager.iCount, 1 do
 	local champ = heroManager:getHero(i)
 	if champ ~= nil and champ ~= myHero and champ.visible and champ.dead == false then
@@ -371,8 +350,8 @@ function Katarina:Damage(spell, unit)
 
 end
 
-local serveradress = "raw.githubusercontent.com"
-local scriptadress = "/ShabbaWind/KatarinaTheWind/master"
+local serveradress = "raw.githubusercontent.com/"
+local scriptadress = "ShabbaWind/KatarinaTheWind/master"
 local scriptname = "Katarina"
 function Katarina:CheckUpdate()
   	local ServerVersionDATA = GetWebResult(serveradress , scriptadress.."/"..scriptname..".version")
