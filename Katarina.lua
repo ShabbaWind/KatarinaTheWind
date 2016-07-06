@@ -1,353 +1,248 @@
 if myHero.charName ~= "Katarina" then return end
-
-function OnLoad() Katarina() end
-
-assert(load(Base64Decode("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"), nil, "bt", _ENV))() ScriptStatus("PCFGFBIBFFG") 
-
-class 'Katarina'
-local AlreadyUlt = false
-function Katarina:__init()
-	Ulting = false
-	self.Version = 4
-	self.LastSpell = 0
-	self.Sequence = {1,2,3,1,1,4,2,2,1,2,4,1,2,3,3,4,3,3}
-	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
-	self:CheckSummoner()
-	self:Callbacks()
-	self:CheckUpdate()
-	self:Menu()
-end
-
-function Katarina:CheckSummoner()
-  if myHero:GetSpellData(SUMMONER_1).name:find("summonerdot") then Ignite = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerdot") then Ignite = SUMMONER_2 end
-  if myHero:GetSpellData(SUMMONER_1).name:find("summonerflash") then Flash = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerflash") then Flash = SUMMONER_2 end
-  if myHero:GetSpellData(SUMMONER_1).name:find("summonerbar") then Heal = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerbar") then Heal = SUMMONER_2 end
-  if myHero:GetSpellData(SUMMONER_1).name:find("summonerheal") then Barrier = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerheal") then Barrier = SUMMONER_2 end
-end
-
-function Katarina:Callbacks()
-  	AddTickCallback(function() self:Tick() end)
-  	AddTickCallback(function() self:AutoLeveler() end)
-  	AddDrawCallback(function() self:Draws() end)
-  	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
-end
-
-function Katarina:Menu()
-  	Menu = scriptConfig("TheWind Katarina", "TheWind Katarina")
   
-  	Menu:addSubMenu("Kombo", "Combo")
-  	Menu:addSubMenu("Tamadas", "Harass")
-  	Menu:addSubMenu("Minion last hit", "LastHit")
-  	Menu:addSubMenu("Lane tisztitas", "LaneClear")
-  	if Ignite then Menu:addSubMenu("Gyilkossag lopas", "KillSteal") end
-  	Menu:addSubMenu("Korok", "Draws")
-  	Menu:addSubMenu("Gombok", "Keys")
-  	if VIP_USER then Menu:addSubMenu("Automata skill elosztas", "AutoLeveler") end
+local HK = 32
+local HHK = 84
+local range = 700
+local ULTK = 82
+local tick = nil
+local ultActive = false
+local timeult = 0
+local timeq = 0
+local lastqmark = 0
+local lastAnimation = ""
+local waittxt = {}
+local calculationenemy = 1
+local floattext = {"Nincs elerheto skilled","Harcolj","Megolheto","PUSZTITSD EL A GECIBE!"}
+local killable = {}
+local ts
+local distancetarget = 0
+local ID = {DFG = 3128, HXG = 3146, BWC = 3144, Sheen = 3057, Trinity = 3078, LB = 3100, IG = 3025, LT = 3151, BT = 3188, STI = 3092, RO = 3143, BRK = 3153}
+local Slot = {Q = _Q, W = _W, E = _E, R = _R, I = nil, DFG = nil, HXG = nil, BWC = nil, Sheen = nil, Trinity = nil, LB = nil, IG = nil, LT = nil, BT = nil, STI = nil, RO = nil, BRK = nil}
+local RDY = {Q = false, W = false, E = false, R = false, I = false, DFG = false, HXG = false, BWC = false, STI = false, RO = false, BRK = false}
 
-	Menu.Combo:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
-	Menu.Combo:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-	Menu.Combo:addParam("UseE", "E hasznalata", SCRIPT_PARAM_ONOFF, true) 
-	Menu.Combo:addParam("UseR", "R hasznalata", SCRIPT_PARAM_ONOFF, true)
-
-	Menu.Harass:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
-	Menu.Harass:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-
-	Menu.LastHit:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
-	Menu.LastHit:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-
-	Menu.LaneClear:addParam("UseQ", "Q hasznalata", SCRIPT_PARAM_ONOFF, true)
-	Menu.LaneClear:addParam("UseW", "W hasznalata", SCRIPT_PARAM_ONOFF, true) 
-
-  	if Ignite then
-  	Menu.KillSteal:addParam("Use", "Gyilkossag lopas", SCRIPT_PARAM_ONOFF, true) 
-  	Menu.KillSteal:addParam("Ignite", "Ignite", SCRIPT_PARAM_ONOFF, true) 
-  	end
-
-  	Menu.Draws:addSubMenu("Szinek", "Colors")
-	Menu.Draws.Colors:addParam("Q", "Q Szin", SCRIPT_PARAM_COLOR, {255, 214, 114, 0})
-	Menu.Draws.Colors:addParam("W", "W Szin", SCRIPT_PARAM_COLOR, {255, 224, 124, 0})
-	Menu.Draws.Colors:addParam("E", "E Szin", SCRIPT_PARAM_COLOR, {255, 244, 144, 0})
-	Menu.Draws.Colors:addParam("R", "R Szin", SCRIPT_PARAM_COLOR, {255, 114, 154, 0})
-  	Menu.Draws:addParam("CD", "Mutassa a toltodesi idot", SCRIPT_PARAM_ONOFF, true) 
-  	Menu.Draws:addParam("Q", "Q range mutatas", SCRIPT_PARAM_ONOFF, true) 
-  	Menu.Draws:addParam("W", "W range mutatas", SCRIPT_PARAM_ONOFF, true) 
-  	Menu.Draws:addParam("E", "E range mutatas", SCRIPT_PARAM_ONOFF, true) 
-  	Menu.Draws:addParam("R", "R range mutatas", SCRIPT_PARAM_ONOFF, true) 
-
-  	if VIP_USER then
-  	Menu.AutoLeveler:addParam("Active", "Auto skill elosztas hasznalata", SCRIPT_PARAM_ONOFF, true) 
-	end
-	
-	Menu.Keys:addParam("Combo", "Kombo gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
-	Menu.Keys:addParam("Harass", "Tamadas gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
-	Menu.Keys:addParam("LastHit", "Last Hit gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("X"))
-	Menu.Keys:addParam("LaneClear", "Lane tisztitas gomb", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
-
-ts = TargetSelector(TARGET_LESS_CAST_PRIORITY, 775, DAMAGE_MAGICAL)
-ts.name = "Katarina"
-Menu:addTS(ts)
-enemyMinions = minionManager(MINION_ENEMY, 700, myHero, MINION_SORT_HEALTH_ASC)
-jungleMinions = minionManager(MINION_JUNGLE, 700, myHero, MINION_SORT_MAXHEALTH_DEC)
+function Katarina:__init()
+	self.Version = 1.1
+	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
+	self:CheckUpdate()
 end
-
+ 
+function OnLoad()
+        KCConfig = scriptConfig("The Wind Katarina", "katarinacombo")
+        KCConfig:addParam("scriptActive", "Kombo", SCRIPT_PARAM_ONKEYDOWN, false, HK)
+        KCConfig:addParam("harass", "Tamadas (Nem teljes Comb)", SCRIPT_PARAM_ONKEYDOWN, false, HHK)
+        KCConfig:addParam("harasscombo", "Tamadas (Nem teljes Comb) beallitas", SCRIPT_PARAM_SLICE, 2, 0, 2, 0)
+        KCConfig:addParam("drawcircles", "Korok mutatasa", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:addParam("drawtext", "Szoveg mutatasa", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:addParam("useult", "Ulti hasznalata", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:addParam("delayw", "Passzivos W", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:addParam("canstopult", "Megallithato ulti", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:addParam("autoIgnite", "Automatikus Ignite", SCRIPT_PARAM_ONOFF, true)
+        KCConfig:permaShow("scriptActive")
+        KCConfig:permaShow("harass")
+        ts = TargetSelector(TARGET_LESS_CAST_PRIORITY,range,DAMAGE_MAGIC)
+        ts.name = "Katarina"
+        KCConfig:addTS(ts)
+        if myHero:GetSpellData(SUMMONER_1).name:find("SummonerDot") then Slot.I = SUMMONER_1
+        elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerDot") then Slot.I = SUMMONER_2 end
+        for i=1, heroManager.iCount do waittxt[i] = i*3 end
+end
+function OnTick()
+        ts:update()
+        for name,number in pairs(ID) do Slot[name] = GetInventorySlotItem(number) end
+        for name,state in pairs(RDY) do RDY[name] = (Slot[name] ~= nil and myHero:CanUseSpell(Slot[name]) == READY) end
+        if tick == nil or GetTickCount()-tick >= 100 then
+                tick = GetTickCount()
+                KCDmgCalculation()
+        end
+        ultActive = GetTickCount() <= timeult+GetLatency()+50 or lastAnimation == "Spell4"
+        if KCConfig.canstopult and ultActive and ts.target ~= nil then
+                if KCDmgCalculation2(ts.target) > ts.target.health then ultActive, timeult = false, 0 end
+        end    
+        if ts.target ~= nil then distancetarget = GetDistance(ts.target) end
+        if KCConfig.harass and ts.target ~= nil and not ultActive then 
+                if RDY.Q then CastSpell(_Q, ts.target) end
+                if KCConfig.harasscombo == 2 and RDY.E then CastSpell(_E,ts.target) end
+                if KCConfig.harasscombo >= 1 then
+                        if RDY.W and distancetarget<375 and (((GetTickCount()-timeq>650 or GetTickCount()-lastqmark<650) and not RDY.Q) or not KCConfig.delayw) then CastSpell(_W) end
+                end
+        end
+        if KCConfig.scriptActive and ts.target ~= nil and KCConfig.autoIgnite and RDY.I then
+                local QWEDmg = KCDmgCalculation2(ts.target)
+                local RDmg = (RDY.R and KCConfig.useult and distancetarget<=325) and getDmg("R",ts.target,myHero)*5 or 0
+                local IDmg = getDmg("IGNITE",ts.target,myHero)
+                if distancetarget<=600 and ts.target.health > QWEDmg+RDmg and ts.target.health <= IDmg+QWEDmg+RDmg then CastSpell(Slot.I, ts.target) end
+        end
+        if KCConfig.scriptActive and ts.target ~= nil and not ultActive then
+                if RDY.DFG then CastSpell(Slot.DFG, ts.target) end
+                if RDY.Q then CastSpell(_Q, ts.target) end
+                if RDY.E then CastSpell(_E,ts.target) end
+                if RDY.W and distancetarget<375 and (((GetTickCount()-timeq>650 or GetTickCount()-lastqmark<650) and not RDY.Q) or not KCConfig.delayw or (KCConfig.useult and RDY.R)) then CastSpell(_W) end
+                if RDY.HXG then CastSpell(Slot.HXG, ts.target) end
+                if RDY.BWC then CastSpell(Slot.BWC, ts.target) end
+                if RDY.BRK then CastSpell(Slot.BRK, ts.target) end
+                if RDY.STI and distancetarget<=380 then CastSpell(Slot.STI, myHero) end
+                if RDY.RO and distancetarget<=500 then CastSpell(Slot.RO) end
+                if RDY.R and KCConfig.useult and not RDY.Q and not RDY.W and not RDY.E and not RDY.DFG and not RDY.HXG and not RDY.BWC and not RDY.BRK and not RDY.STI and not RDY.RO and distancetarget<275 then
+                        timeult = GetTickCount()
+                        CastSpell(_R)
+                end
+        end
+end
 
 function Katarina:SendMsg(msg)
 	PrintChat("<font color=\"#831928\"><b>[The Wind Katarina Script]</b></font> ".."<font color=\"#00D2FF\"><b>"..msg.."</b></font>")
 end
 
-function Katarina:Tick()
-	if myHero.dead then return end
-	Target = self:Target()
-	if Ignite and Menu.KillSteal.Use then self:KillSteal() end
-	if AlreadyUlt then
-	if Ulting then 
-	self:DisableMove()
-	return
-	else 
-	self:EnableMove()
-	end
-	end
-	if Target ~= nil then self:Combo() self:Harass() end
-	self:LastHit()
-	self:LaneClear()
-end
-
-function Katarina:EnableMove()
-	if _G.Reborn_Loaded or _G.Reborn_Initialised or _G.AutoCarry ~= nil then
-	_G.AutoCarry.MyHero:MovementEnabled(true)
-	elseif _G.MMA_IsLoaded then
-	_G.MMA_AvoidMovement(false)
-	elseif _G.NebelwolfisOrbWalkerInit or _G.NebelwolfisOrbWalkerLoaded then
-	_G.NOWi:SetMove(true)
-	elseif _G._Pewalk then
-	_G._Pewalk.AllowMove(true)
-	elseif _G["BigFatOrb_Loaded"] then
-	_G["BigFatOrb_DisableMove"] = false
-	elseif _G.SxOrb then
-	_G.SxOrb:EnableMove()	
-	elseif G.SOWi then
-	_G.SOWi.Move = true
-	end
-end
-
-function Katarina:DisableMove()
-	if _G.Reborn_Loaded or _G.Reborn_Initialised or _G.AutoCarry ~= nil then
-	_G.AutoCarry.MyHero:MovementEnabled(false)
-	elseif _G.MMA_IsLoaded then
-	_G.MMA_AvoidMovement(true)
-	elseif _G.NebelwolfisOrbWalkerInit or _G.NebelwolfisOrbWalkerLoaded then
-	_G.NOWi:SetMove(false)
-	elseif _G._Pewalk then
-	_G._Pewalk.AllowMove(false)
-	elseif _G["BigFatOrb_Loaded"] then
-	_G["BigFatOrb_DisableMove"] = true
-	elseif _G.SxOrb then
-	_G.SxOrb:EnableMove()	
-	elseif G.SOWi then
-	_G.SOWi.Move = false
-	end
-end
-
-function Katarina:KillSteal()
-	if Menu.KillSteal.Ignite then
-  	for _, unit in pairs(GetEnemyHeroes()) do
-  	local health = unit.health
-  	if Ignite then
- 	if health <= 40 + (20 * myHero.level) and myHero:CanUseSpell(Ignite) == READY and ValidTarget(unit) and GetDistance(unit) <= 875 then
- 	CastSpell(Ignite, unit)
- 	end
- 	end
-end
-end
-end
-
-function Katarina:Target()
-	ts:update()
-	if ts.target == nil then return nil else return ts.target end
-end
-
-function Katarina:Combo()
-	if not Menu.Keys.Combo then return end
-	if self:Ready(_Q) and Menu.Combo.UseQ then self:CastQ(Target)
-	elseif self:Ready(_E) and Menu.Combo.UseE then self:CastE(Target)
-	elseif self:Ready(_W) and Menu.Combo.UseW then self:CastW(Target)
-	elseif self:Ready(_R) and Menu.Combo.UseR then self:CastR(Target) end
-end
-
-function Katarina:Harass()
-	if not Menu.Keys.Harass then return end
-	if Menu.Combo.UseQ then self:CastQ(Target) end
-	if Menu.Combo.UseW then self:CastW(Target) end
-end
-
-function Katarina:LastHit()
-	if not Menu.Keys.LastHit then return end
-  	enemyMinions:update()
-   	for i, minion in pairs(enemyMinions.objects) do
-	if Menu.LastHit.UseQ and self:SpellManager(_Q, dmg, minion) then self:CastQ(minion) end
-	if Menu.LastHit.UseW and self:SpellManager(_W, dmg, minion) then self:CastW(minion) end
-   	end
-end
-
-function Katarina:LaneClear()
-	if not Menu.Keys.LaneClear then return end
-  	enemyMinions:update()
-  	jungleMinions:update()
- 	for i, minion in pairs(enemyMinions.objects) do
-	if Menu.LaneClear.UseQ then self:CastQ(minion) end
-	if Menu.LaneClear.UseW then self:CastW(minion) end
-	end
- 	for i, minion in pairs(jungleMinions.objects) do
-	if Menu.LaneClear.UseQ then self:CastQ(minion) end
-	if Menu.LaneClear.UseW then self:CastW(minion) end
-end
-end
-
-function Katarina:AutoLeveler()
-	if not VIP_USER then return end
-  	if Menu.AutoLeveler.Active and os.clock() - self.LastSpell >= 1.0 then
-  	self.LastSpell = os.clock()  
-  	DelayAction(function() autoLevelSetSequence(self.Sequence) end,0.5)
+function KCDmgCalculation2(enemy)
+        local distanceenemy = GetDistance(enemy)
+        local qdamage = getDmg("Q",enemy,myHero)
+        local qdamage2 = getDmg("Q",enemy,myHero,2)
+        local wdamage = getDmg("W",enemy,myHero)
+        local edamage = getDmg("E",enemy,myHero)
+        local combo5 = 0
+        if RDY.Q then
+                combo5 = combo5 + qdamage
+                if RDY.E or (distanceenemy<375 and RDY.W) then
+                        combo5 = combo5 + qdamage2
+                end
         end
-	if not Menu.AutoLeveler.Active then autoLevelSetSequence(nil) end
+        if RDY.W and (RDY.E or distanceenemy<375) then
+                combo5 = combo5 + wdamage
+        end
+        if RDY.E then
+                combo5 = combo5 + edamage
+        end
+        return combo5
 end
-
-function Katarina:CastQ(unit)
-	if ValidTarget(unit) and GetDistance(unit) <= self:SpellManager(_Q, range) and self:Ready(_Q) then 
-	CastSpell(_Q, unit)
-	end
+function KCDmgCalculation()
+        local enemy = heroManager:GetHero(calculationenemy)
+        if ValidTarget(enemy) then
+                local qdamage = getDmg("Q",enemy,myHero)
+                local qdamage2 = getDmg("Q",enemy,myHero,2)
+                local wdamage = getDmg("W",enemy,myHero)
+                local edamage = getDmg("E",enemy,myHero)
+                local rdamage = getDmg("R",enemy,myHero) --xdagger (champion can be hit by a maximum of 10 daggers (2 sec))
+                local hitdamage = getDmg("AD",enemy,myHero)
+                local dfgdamage = (Slot.DFG and getDmg("DFG",enemy,myHero) or 0)--amplifies all magic damage they take by 20%
+                local hxgdamage = (Slot.HXG and getDmg("HXG",enemy,myHero) or 0)
+                local bwcdamage = (Slot.BWC and getDmg("BWC",enemy,myHero) or 0)
+                local brkdamage = (Slot.BRK and getDmg("RUINEDKING",enemy,myHero,2) or 0)
+                local ignitedamage = (Slot.I and getDmg("IGNITE",enemy,myHero) or 0)
+                local onhitdmg = (Slot.Sheen and getDmg("SHEEN",enemy,myHero) or 0)+(Slot.Trinity and getDmg("TRINITY",enemy,myHero) or 0)+(Slot.LB and getDmg("LICHBANE",enemy,myHero) or 0)+(Slot.IG and getDmg("ICEBORN",enemy,myHero) or 0)
+                local onspelldamage = (Slot.LT and getDmg("LIANDRYS",enemy,myHero) or 0)+(Slot.BT and getDmg("BLACKFIRE",enemy,myHero) or 0)
+                local onspelldamage2 = 0
+                local combo1 = hitdamage + (qdamage*2 + qdamage2*2 + wdamage*2 + edamage*2 + rdamage*10)*(RDY.DFG and 1.2 or 1) + onhitdmg + onspelldamage*4 --0 cd
+                local combo2 = hitdamage + onhitdmg
+                local combo3 = hitdamage + onhitdmg
+                local combo4 = 0
+                if RDY.Q then
+                        combo2 = combo2 + (qdamage + qdamage2)*(RDY.DFG and 2.2 or 2)
+                        combo3 = combo3 + (qdamage + qdamage2)*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + qdamage + (RDY.E and qdamage2 or 0)
+                        onspelldamage2 = onspelldamage2+1
+                end
+                if RDY.W then
+                        combo2 = combo2 + wdamage*(RDY.DFG and 2.2 or 2)
+                        combo3 = combo3 + wdamage*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + (RDY.E and wdamage or 0)
+                        onspelldamage2 = onspelldamage2+1
+                end
+                if RDY.E then
+                        combo2 = combo2 + edamage*(RDY.DFG and 2.2 or 2)
+                        combo3 = combo3 + edamage*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + edamage
+                        onspelldamage2 = onspelldamage2+1
+                end
+                if myHero:CanUseSpell(_R) ~= COOLDOWN and not myHero.dead then
+                        combo2 = combo2 + rdamage*10*(RDY.DFG and 1.2 or 1)
+                        combo3 = combo3 + rdamage*7*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + (RDY.E and rdamage*3 or 0)
+                        onspelldamage2 = onspelldamage2+1
+                end
+                if RDY.DFG then
+                        combo1 = combo1 + dfgdamage
+                        combo2 = combo2 + dfgdamage
+                        combo3 = combo3 + dfgdamage
+                        combo4 = combo4 + dfgdamage
+                end
+                if RDY.HXG then              
+                        combo1 = combo1 + hxgdamage*(RDY.DFG and 1.2 or 1)
+                        combo2 = combo2 + hxgdamage*(RDY.DFG and 1.2 or 1)
+                        combo3 = combo3 + hxgdamage*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + hxgdamage
+                end
+                if RDY.BWC then
+                        combo1 = combo1 + bwcdamage*(RDY.DFG and 1.2 or 1)
+                        combo2 = combo2 + bwcdamage*(RDY.DFG and 1.2 or 1)
+                        combo3 = combo3 + bwcdamage*(RDY.DFG and 1.2 or 1)
+                        combo4 = combo4 + bwcdamage
+                end
+                if RDY.BRK then
+                        combo1 = combo1 + brkdamage
+                        combo2 = combo2 + brkdamage
+                        combo3 = combo3 + brkdamage
+                        combo4 = combo4 + brkdamage
+                end
+                if RDY.I then
+                        combo1 = combo1 + ignitedamage
+                        combo2 = combo2 + ignitedamage
+                        combo3 = combo3 + ignitedamage
+                end
+                combo2 = combo2 + onspelldamage*onspelldamage2
+                combo3 = combo3 + onspelldamage/2 + onspelldamage*onspelldamage2/2
+                combo4 = combo4 + onspelldamage
+                if combo4 >= enemy.health then killable[calculationenemy] = 4
+                elseif combo3 >= enemy.health then killable[calculationenemy] = 3
+                elseif combo2 >= enemy.health then killable[calculationenemy] = 2
+                elseif combo1 >= enemy.health then killable[calculationenemy] = 1
+                else killable[calculationenemy] = 0 end  
+        end
+        if calculationenemy == 1 then calculationenemy = heroManager.iCount
+        else calculationenemy = calculationenemy-1 end
 end
-
-function Katarina:CastW(unit)
-	if ValidTarget(unit) and GetDistance(unit) <= self:SpellManager(_W, range) and self:Ready(_W) then 
-	CastSpell(_W)
-	end
+function OnProcessSpell(unit, spell)
+        if unit.isMe and spell.name == "KatarinaQ" then timeq = GetTickCount() end
 end
-
-function Katarina:CastE(unit)
-	if ValidTarget(unit) and GetDistance(unit) <= self:SpellManager(_E, range) and self:Ready(_E) then 
-	CastSpell(_E, unit)
-	end
+function OnCreateObj(object)
+        if object.name:find("katarina_daggered") then lastqmark = GetTickCount() end
 end
-
-function Katarina:CastR(unit)
-	if ValidTarget(unit) and GetDistance(unit) <= self:SpellManager(_R, range) and self:Ready(_R) then 
-	CastSpell(_R)
-	AlreadyUlt = true
-	end
+function OnAnimation(unit,animationName)
+        if unit.isMe and lastAnimation ~= animationName then lastAnimation = animationName end
 end
-
-function Katarina:Ready(spell)
-	if spell == _Q then if myHero:CanUseSpell(_Q) == READY then return true else return false end end
-	if spell == _W then if myHero:CanUseSpell(_W) == READY then return true else return false end end
-	if spell == _E then if myHero:CanUseSpell(_E) == READY then return true else return false end end
-	if spell == _R then if myHero:CanUseSpell(_R) == READY then return true else return false end end
+function OnDraw()
+        if KCConfig.drawcircles and not myHero.dead then
+                DrawCircle3D(myHero.x, myHero.y, myHero.z, range, 1, ARGB(255,25,255,18))
+                if ts.target ~= nil then
+                        DrawCircle3D(ts.target.x, ts.target.y, ts.target.z, ts.target.boundingRadius, 8, ARGB(200,255,155,0), 20)
+                end
+        end
+        for i=1, heroManager.iCount do
+                local enemydraw = heroManager:GetHero(i)
+                if ValidTarget(enemydraw) then
+                        if KCConfig.drawcircles then
+                                if killable[i] == 1 then
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 30, 6, ARGB(155,0,0,255), 16)
+                                elseif killable[i] == 2 then
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 10, 6, ARGB(155,255,0,0), 16)
+                                elseif killable[i] == 3 then
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 10, 6, ARGB(155,255,0,0), 16)
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 30, 6, ARGB(155,255,0,0), 16)
+                                elseif killable[i] == 4 then
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 10, 6, ARGB(155,255,0,0), 16)
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 30, 6, ARGB(155,255,0,0), 16)
+                                        DrawCircle3D(enemydraw.x, enemydraw.y, enemydraw.z, 50, 6, ARGB(155,255,0,0), 16)
+                                end
+                        end
+                        if KCConfig.drawtext and waittxt[i] == 1 and killable[i] ~= 0 then
+                                PrintFloatText(enemydraw,0,floattext[killable[i]])
+                        end
+                end
+                if waittxt[i] == 1 then waittxt[i] = 30
+                else waittxt[i] = waittxt[i]-1 end
+        end
 end
-
-function Katarina:Draws()
-	if Menu.Draws.CD then self:DrawCooldown() end
-	if Menu.Draws.Q and self:Ready(_Q) then DrawCircle(myHero.x, myHero.y, myHero.z, self:SpellManager(_Q, range), ARGB(Menu.Draws.Colors.Q[1],Menu.Draws.Colors.Q[2],Menu.Draws.Colors.Q[3],Menu.Draws.Colors.Q[4])) end
-	if Menu.Draws.W and self:Ready(_W) then DrawCircle(myHero.x, myHero.y, myHero.z, self:SpellManager(_W, range), ARGB(Menu.Draws.Colors.W[1],Menu.Draws.Colors.W[2],Menu.Draws.Colors.W[3],Menu.Draws.Colors.W[4])) end
-	if Menu.Draws.E and self:Ready(_E) then DrawCircle(myHero.x, myHero.y, myHero.z, self:SpellManager(_E, range), ARGB(Menu.Draws.Colors.E[1],Menu.Draws.Colors.E[2],Menu.Draws.Colors.E[3],Menu.Draws.Colors.E[4])) end
-	if Menu.Draws.R and self:Ready(_R) then DrawCircle(myHero.x, myHero.y, myHero.z, self:SpellManager(_R, range), ARGB(Menu.Draws.Colors.R[1],Menu.Draws.Colors.R[2],Menu.Draws.Colors.R[3],Menu.Draws.Colors.R[4])) end
-end
-
-function GetHPBarPos(enemy)
-	enemy.barData = {PercentageOffset = {x = -0.05, y = 0}}
-	local barPos = GetUnitHPBarPos(enemy)
-	local barPosOffset = GetUnitHPBarOffset(enemy)
-	local barOffset = { x = enemy.barData.PercentageOffset.x, y = enemy.barData.PercentageOffset.y }
-	local barPosPercentageOffset = { x = enemy.barData.PercentageOffset.x, y = enemy.barData.PercentageOffset.y }
-	local BarPosOffsetX = 171
-	local BarPosOffsetY = 46
-	local CorrectionY = 39
-	local StartHpPos = 31
-
-	barPos.x = math.floor(barPos.x + (barPosOffset.x - 0.5 + barPosPercentageOffset.x) * BarPosOffsetX + StartHpPos)
-	barPos.y = math.floor(barPos.y + (barPosOffset.y - 0.5 + barPosPercentageOffset.y) * BarPosOffsetY + CorrectionY)
-
-	local StartPos = Vector(barPos.x , barPos.y, 0)
-	local EndPos = Vector(barPos.x + 108 , barPos.y , 0)
-	return Vector(StartPos.x, StartPos.y, 0), Vector(EndPos.x, EndPos.y, 0)
-end
-
-function Katarina:DrawCooldown()
-	for i = 1, heroManager.iCount, 1 do
-	local champ = heroManager:getHero(i)
-	if champ ~= nil and champ ~= myHero and champ.visible and champ.dead == false then
-	local barPos = GetHPBarPos(champ)
-	if OnScreen(barPos.x, barPos.y) then
-	local CoolDownTracker = {}
-	CoolDownTracker[0] = math.ceil(champ:GetSpellData(SPELL_1).currentCd)
-	CoolDownTracker[1] = math.ceil(champ:GetSpellData(SPELL_2).currentCd)
-	CoolDownTracker[2] = math.ceil(champ:GetSpellData(SPELL_3).currentCd)
-	CoolDownTracker[3] = math.ceil(champ:GetSpellData(SPELL_4).currentCd)
-		   	
-	local spellColor = {}
-	spellColor[0] = 0xBBFFD700;
-	spellColor[1] = 0xBBFFD700;
-	spellColor[2] = 0xBBFFD700;
-	spellColor[3] = 0xBBFFD700;
-									   
-	if CoolDownTracker[0] == nil or CoolDownTracker[0] == 0 then CoolDownTracker[0] = "Q" spellColor[0] = 0xBBFFFFFF end
-	if CoolDownTracker[1] == nil or CoolDownTracker[1] == 0 then CoolDownTracker[1] = "W" spellColor[1] = 0xBBFFFFFF end
-	if CoolDownTracker[2] == nil or CoolDownTracker[2] == 0 then CoolDownTracker[2] = "E" spellColor[2] = 0xBBFFFFFF end
-	if CoolDownTracker[3] == nil or CoolDownTracker[3] == 0 then CoolDownTracker[3] = "R" spellColor[3] = 0xBBFFFFFF end
-		   	
-	if champ:GetSpellData(SPELL_1).level == 0 then spellColor[0] = 0xBBFF0000 end
-	if champ:GetSpellData(SPELL_2).level == 0 then spellColor[1] = 0xBBFF0000 end
-	if champ:GetSpellData(SPELL_3).level == 0 then spellColor[2] = 0xBBFF0000 end
-	if champ:GetSpellData(SPELL_4).level == 0 then spellColor[3] = 0xBBFF0000 end
-	DrawRectangle(barPos.x-6, barPos.y-40, 80, 15, 0xBB202020)
-	DrawText("[" .. CoolDownTracker[0] .. "]" ,12, barPos.x-5+2, barPos.y-40, spellColor[0])
-	DrawText("[" .. CoolDownTracker[1] .. "]", 12, barPos.x+15+2, barPos.y-40, spellColor[1])
-	DrawText("[" .. CoolDownTracker[2] .. "]", 12, barPos.x+35+2, barPos.y-40, spellColor[2])
-	DrawText("[" .. CoolDownTracker[3] .. "]", 12, barPos.x+54+2, barPos.y-40, spellColor[3])
-end
-end
-end
-end
-
-function OnCastSpell(iSpell,startPos,endPos,targetUnit)
-	if iSpell == 3 then
-	Ulting = true
-end
-end
-
-function Katarina:RemoveBuff(unit, buff)
-	if unit and buff and unit.isMe and buff.name == "katarinarsound" then
-	Ulting = false
-end
-end
-
-function Katarina:SpellManager(spell, t2, unit)
-	if spell == _Q and t2 == range then return 675 end
-	if spell == _W and t2 == range then return 400 end
-	if spell == _E and t2 == range then return 700 end
-	if spell == _R and t2 == range then return 550 end
-	if spell == _Q and t2 == dmg and unit then return self:Damage(_Q, unit) end
-	if spell == _W and t2 == dmg and unit then return self:Damage(_W, unit) end
-	if spell == _E and t2 == dmg and unit then return self:Damage(_E, unit) end
-	if spell == _R and t2 == dmg and unit then return self:Damage(_R, unit) end
-end
-
-function Katarina:Damage(spell, unit)
-	if spell == _Q and unit then 
-	return getDmg("Q", unit, myHero)
-	end
-
-	if spell == _W and unit then 
-	return getDmg("W", unit, myHero)
-	end
-
-	if spell == _E and unit then 
-	return getDmg("E", unit, myHero)
-	end
-
-	if spell == _R and unit then 
-	return getDmg("R", unit, myHero)
-	end
-
+function OnWndMsg(msg,key)
+        if key == ULTK and msg == KEY_DOWN then timeult = GetTickCount() end
 end
 
 local serveradress = "raw.githubusercontent.com"
