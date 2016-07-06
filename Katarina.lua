@@ -86,7 +86,7 @@ class 'Katarina'
 function Katarina:__init()
 	self:LoadPriorityTable()
 	self:SetTablePriorities()
-	self.Version = 1.2
+	self.Version = 1.3
 	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
 	self:CheckUpdate()
 	self.LastSpell = 0
@@ -313,27 +313,27 @@ function OnDraw()
 end
 
 	function Katarina:LoadPriorityTable()
-		--|> This bish is long for sake of cleaness is here
 		self.priorityTable = {
 			AP = {
 				'Annie', 'Ahri', 'Akali', 'Anivia', 'Annie', 'Azir', 'Brand', 'Cassiopeia', 'Diana', 'Evelynn', 'FiddleSticks', 'Fizz', 'Gragas', 'Heimerdinger', 'Karthus',
 				'Kassadin', 'Katarina', 'Kayle', 'Kennen', 'Leblanc', 'Lissandra', 'Lux', 'Malzahar', 'Mordekaiser', 'Morgana', 'Nidalee', 'Orianna',
-				'Ryze', 'Sion', 'Swain', 'Syndra', 'Teemo', 'TwistedFate', 'Veigar', 'Viktor', 'Vladimir', 'Xerath', 'Ziggs', 'Zyra'
+				'Ryze', 'Sion', 'Swain', 'Syndra', 'Teemo', 'TwistedFate', 'Veigar', 'Viktor', 'Vladimir', 'Xerath', 'Ziggs', 'Zyra', Taliyah,
+				'Ekko', 'Nidalee', 'Heimerdinger', 'Aurelio Sol'
 			},
 			Support = {
 				'Alistar', 'Blitzcrank', 'Braum', 'Janna', 'Karma', 'Leona', 'Lulu', 'Nami', 'Nunu', 'Sona', 'Soraka', 'Taric', 'Thresh', 'Zilean'
 			},
 			Tank = {
-				'Amumu', 'Chogath', 'DrMundo', 'Galio', 'Hecarim', 'Malphite', 'Maokai', 'Nasus', 'Rammus', 'Sejuani', 'Nautilus', 'Shen', 'Singed', 'Skarner', 'Volibear',
-				'Warwick', 'Yorick', 'Zac'
+				'Amumu', 'Chogath', 'fMundo', 'Galio', 'Hecarim', 'Malphite', 'Maokai', 'Nasus', 'Rammus', 'Sejuani', 'Nautilus', 'Shen', 'Singed', 'Skarner', 'Volibear',
+				'Warwick', 'Yorick', 'Zac', 'Tahm Kench'
 			},
 			AD_Carry = {
 				'Ashe', 'Caitlyn', 'Corki', 'Draven', 'Ezreal', 'Graves', 'Jayce', 'Jinx', 'Kalista', 'KogMaw', 'Lucian', 'MasterYi', 'MissFortune', 'Pantheon', 'Quinn', 'Shaco', 'Sivir',
-				'Talon','Tryndamere', 'Tristana', 'Twitch', 'Urgot', 'Varus', 'Vayne', 'Yasuo','Zed'
+				'Talon','Tryndamere', 'Tristana', 'Twitch', 'Urgot', 'Varus', 'Vayne', 'Yasuo', 'Zed', 'Jhin'
 			},
 			Bruiser = {
 				'Aatrox', 'Darius', 'Elise', 'Fiora', 'Gnar', 'Gangplank', 'Garen', 'Irelia', 'JarvanIV', 'Jax', 'Khazix', 'LeeSin', 'Nocturne', 'Olaf', 'Poppy',
-				'Renekton', 'Rengar', 'Riven', 'RekSai', 'Rumble', 'Shyvana', 'Trundle', 'Udyr', 'Vi', 'MonkeyKing', 'XinZhao'
+				'Renekton', 'Rengar', 'Riven', 'RekSai', 'Rumble', 'Shyvana', 'Trundle', 'Udyr', 'Vi', 'MonkeyKing', 'XinZhao', 'Fiora', 'Wukong'
 			}
 		}
 	end
@@ -357,7 +357,7 @@ end
 				self:SetPriority(self.priorityTable.Tank, enemy, 3)
 			end
 		else
-			print('Too few champions to arrange priority!')
+			print('Target Selector sikeresen beállítva!')
 		end
 	end
 
