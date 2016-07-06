@@ -8,7 +8,7 @@ class 'Katarina'
 local AlreadyUlt = false
 function Katarina:__init()
 	Ulting = false
-	self.Version = 6.13
+	self.Version = 6.14
 	self.LastSpell = 0
 	self.Sequence = {1,2,3,1,1,4,2,2,1,2,4,1,2,3,3,4,3,3}
 	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
