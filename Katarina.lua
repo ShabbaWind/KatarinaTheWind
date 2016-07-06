@@ -20,12 +20,6 @@ local ID = {DFG = 3128, HXG = 3146, BWC = 3144, Sheen = 3057, Trinity = 3078, LB
 local Slot = {Q = _Q, W = _W, E = _E, R = _R, I = nil, DFG = nil, HXG = nil, BWC = nil, Sheen = nil, Trinity = nil, LB = nil, IG = nil, LT = nil, BT = nil, STI = nil, RO = nil, BRK = nil}
 local RDY = {Q = false, W = false, E = false, R = false, I = false, DFG = false, HXG = false, BWC = false, STI = false, RO = false, BRK = false}
 
-function Katarina:__init()
-	self.Version = 1.1
-	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
-	self:CheckUpdate()
-end
- 
 function OnLoad()
         KCConfig = scriptConfig("The Wind Katarina", "katarinacombo")
         KCConfig:addParam("scriptActive", "Kombo", SCRIPT_PARAM_ONKEYDOWN, false, HK)
@@ -45,7 +39,22 @@ function OnLoad()
         if myHero:GetSpellData(SUMMONER_1).name:find("SummonerDot") then Slot.I = SUMMONER_1
         elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerDot") then Slot.I = SUMMONER_2 end
         for i=1, heroManager.iCount do waittxt[i] = i*3 end
+		Katarina()
 end
+
+class 'Katarina'
+
+function Katarina:__init()
+	self.Version = 1.1
+	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
+	self:CheckUpdate()
+end
+
+function Katarina:SendMsg(msg)
+	PrintChat("<font color=\"#831928\"><b>[The Wind Katarina Script]</b></font> ".."<font color=\"#00D2FF\"><b>"..msg.."</b></font>")
+end
+ 
+
 function OnTick()
         ts:update()
         for name,number in pairs(ID) do Slot[name] = GetInventorySlotItem(number) end
@@ -88,11 +97,6 @@ function OnTick()
                 end
         end
 end
-
-function Katarina:SendMsg(msg)
-	PrintChat("<font color=\"#831928\"><b>[The Wind Katarina Script]</b></font> ".."<font color=\"#00D2FF\"><b>"..msg.."</b></font>")
-end
-
 function KCDmgCalculation2(enemy)
         local distanceenemy = GetDistance(enemy)
         local qdamage = getDmg("Q",enemy,myHero)
