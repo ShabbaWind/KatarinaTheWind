@@ -350,8 +350,8 @@ function Katarina:Damage(spell, unit)
 
 end
 
-local serveradress = "raw.githubusercontent.com/"
-local scriptadress = "ShabbaWind/KatarinaTheWind/master"
+local serveradress = "raw.githubusercontent.com"
+local scriptadress = "/ShabbaWind/KatarinaTheWind/master"
 local scriptname = "Katarina"
 function Katarina:CheckUpdate()
   	local ServerVersionDATA = GetWebResult(serveradress , scriptadress.."/"..scriptname..".version")
