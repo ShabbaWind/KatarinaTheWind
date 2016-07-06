@@ -373,7 +373,7 @@ end
 
 local serveradress = "raw.githubusercontent.com"
 local scriptadress = "/ShabbaWind/KatarinaTheWind/master/"
-local scriptname = "KatarinaTheWind"
+local scriptname = "Katarina"
 function Katarina:CheckUpdate()
   	local ServerVersionDATA = GetWebResult(serveradress , scriptadress.."/"..scriptname..".version")
   	if ServerVersionDATA then
