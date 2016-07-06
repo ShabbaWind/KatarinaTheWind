@@ -86,7 +86,7 @@ class 'Katarina'
 function Katarina:__init()
 	self:LoadPriorityTable()
 	self:SetTablePriorities()
-	self.Version = 1.3
+	self.Version = 1.4
 	self:SendMsg("[Betoltott verzio: "..self.Version.."]")
 	self:CheckUpdate()
 	self.LastSpell = 0
@@ -357,7 +357,7 @@ end
 				self:SetPriority(self.priorityTable.Tank, enemy, 3)
 			end
 		else
-			print('Target Selector sikeresen beállítva!')
+			print('Target Selector sikeresen beallitva!')
 		end
 	end
 
