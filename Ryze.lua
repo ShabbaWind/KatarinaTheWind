@@ -17,6 +17,7 @@ function OnLoad()
 
 	config:addSubMenu("Orbwalker", "SxOrbWalk")
 	SxOrb:LoadToMenu(config.SxOrbWalk)
+	Ryze()
 end
 
 class 'Ryze'
